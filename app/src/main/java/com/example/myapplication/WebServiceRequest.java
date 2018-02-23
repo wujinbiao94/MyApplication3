@@ -11,7 +11,7 @@ import java.net.URL;
  */
 
 public class WebServiceRequest {
-    private static String IP = "192.168.0.103:8080";
+    private static String IP = "192.168.8.24:8080/login";
 
     // 通过Get方式获取HTTP服务器数据
     public static String executeHttpGet(String username, String password) {
@@ -22,7 +22,7 @@ public class WebServiceRequest {
         try {
             // 用户名 密码
             // URL 地址
-            String path = "http://" + IP + "/helloworld";
+            String path = "http://" + IP;
             path = path + "?username=" + username + "&password=" + password;
 
             conn = (HttpURLConnection) new URL(path).openConnection();

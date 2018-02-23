@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,16 +52,29 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            info = webService.executeHttpGet(userName.getText().toString(), password.getText().toString());
-            // info = WebServicePost.executeHttpPost(username.getText().toString(), password.getText().toString());
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    infov.setText(info);
-
-                 //   dialog.dismiss();
-                }
-            });
+            if ("".equals(userName.getText().toString()) || "".equals(password.getText().toString())) {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        infov.setText("用户名或密码为空！");
+                    }
+                });
+            } else {
+                info = webService.executeHttpGet(userName.getText().toString(), password.getText().toString());
+                // info = WebServicePost.executeHttpPost(username.getText().toString(), password.getText().toString());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //判断跳转
+                        if ("true".equals(info)) {
+                            Intent intent = new Intent(MainActivity.this, FunctionActivity.class);
+                            startActivity(intent);
+                        } else {
+                            infov.setText(info);
+                        }
+                    }
+                });
+            }
         }
     }
 }
