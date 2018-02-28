@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">交警违章处理</string>
+    <string name="function_name">功能选择</string>
+    <string name="map_name">地图导航</string>
 </resources>
