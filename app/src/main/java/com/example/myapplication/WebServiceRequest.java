@@ -11,6 +11,7 @@ import java.net.URL;
  */
 
 public class WebServiceRequest {
+    //登陆服务器请求ip请将ip更改为本机的ip，服务器代码详见portal，没有权限请联系476887261@qq.com申请
     private static String IP = "192.168.8.24:8080/login";
 
     // 通过Get方式获取HTTP服务器数据
