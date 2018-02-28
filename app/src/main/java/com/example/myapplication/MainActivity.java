@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
+import com.amap.api.navi.INaviInfoCallback;
+import com.amap.api.navi.model.AMapNaviLocation;
+
 public class MainActivity extends AppCompatActivity {
 
     public WebServiceRequest webServiceRequest;
@@ -66,15 +69,21 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         //判断跳转
-                        if ("true".equals(info)) {
+
+                        Intent intent = new Intent(MainActivity.this, FunctionActivity.class);
+                        startActivity(intent);
+
+
+                        /*if ("true".equals(info)) {
                             Intent intent = new Intent(MainActivity.this, FunctionActivity.class);
                             startActivity(intent);
                         } else {
                             infov.setText(info);
-                        }
+                        }*/
                     }
                 });
             }
         }
     }
+
 }
