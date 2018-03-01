@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.amap.api.navi.model.AMapNaviLocation;
 import com.example.myapplication.util.AmapTTSController;
 
 public class FunctionActivity extends AppCompatActivity implements INaviInfoCallback {
+    private Context mContext;
     private AmapTTSController amapTTSController;
     //导航按钮
     Button navigation;
