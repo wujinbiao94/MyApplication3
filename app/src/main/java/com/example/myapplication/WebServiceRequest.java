@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,11 +14,11 @@ import java.net.URL;
 
 public class WebServiceRequest {
     //登陆服务器请求ip请将ip更改为本机的ip，服务器代码详见portal，没有权限请联系476887261@qq.com申请
-    private static String IP = "192.168.8.24:8080/login";
+    private static String IP = "192.168.0.103:8080/login";
 
     // 通过Get方式获取HTTP服务器数据
     public static String executeHttpGet(String username, String password) {
-
+        Log.i("服务器请求","WebServiceRequest.executeHttpGet请求开始");
         HttpURLConnection conn = null;
         InputStream is = null;
 
@@ -25,7 +27,7 @@ public class WebServiceRequest {
             // URL 地址
             String path = "http://" + IP;
             path = path + "?username=" + username + "&password=" + password;
-
+            Log.i("url",path);
             conn = (HttpURLConnection) new URL(path).openConnection();
             conn.setConnectTimeout(3000); // 设置超时时间
             conn.setReadTimeout(3000);
