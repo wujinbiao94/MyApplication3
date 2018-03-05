@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +14,8 @@ import android.widget.*;
 import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
 
+import java.io.InputStream;
+
 public class MainActivity extends AppCompatActivity {
 
     public WebServiceRequest webServiceRequest;
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private String info;
     private SharedPreferences sp;
     private WebServiceRequest webService;
+    //配置文件输入流
+    InputStream in = getResources().openRawResource(R.raw.weburl);
     //用户名
     TextView userName;
     //请求服务器
@@ -88,9 +93,13 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Log.i("No.2 ","请求服务器");
                 try {
-                    info = webService.executeHttpGet(userName.getText().toString(), password.getText().toString());
+                    info = webService.executeHttpGet(in,userName.getText().toString(), password.getText().toString());
+
+                    if (info == null){
+                        Log.e("No.3","服务器返回为空！");
+                        return;
+                    }
                     Log.i("请求参数", userName.getText().toString() + " " + password.getText().toString());
-                    Log.i("返回结果", info);
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
