@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,20 +23,29 @@ public class FunctionActivity extends AppCompatActivity implements INaviInfoCall
     private AmapTTSController amapTTSController;
     //导航按钮
     Button navigation;
+    //车辆查询按钮
+    Button carInfo;
     // 返回主线程更新数据
     private static Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_function);
-
-        navigation = (Button) findViewById(R.id.navigation);
         //导航
+        navigation = (Button) findViewById(R.id.navigation);
         navigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // System.out.println(password.getText());
                 new Thread(new FunctionActivity.NavigationThread()).start();
+            }
+        });
+        //车辆查询
+        carInfo = (Button) findViewById(R.id.carInfo);
+        carInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new carInfoThread()).start();
             }
         });
 
@@ -116,6 +126,17 @@ public class FunctionActivity extends AppCompatActivity implements INaviInfoCall
                     startActivity(intent);*/
                 }
             });
+        }
+    }
+
+    /**
+     * 跳转到车辆查询页面
+     */
+    public class carInfoThread implements Runnable {
+        @Override
+        public void run() {
+            Intent intent = new Intent(FunctionActivity.this, CameraActivity.class);
+            startActivity(intent);
         }
     }
 }

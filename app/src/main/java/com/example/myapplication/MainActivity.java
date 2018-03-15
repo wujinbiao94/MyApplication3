@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,9 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-
-import com.amap.api.navi.INaviInfoCallback;
-import com.amap.api.navi.model.AMapNaviLocation;
 
 import java.io.InputStream;
 
@@ -25,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private WebServiceRequest webService;
     //配置文件输入流
-    InputStream in = getResources().openRawResource(R.raw.weburl);
+    InputStream in=null;
     //用户名
     TextView userName;
     //请求服务器
@@ -53,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         password = (TextView) findViewById(R.id.password);
         infov = (TextView) findViewById(R.id.infoV);
         loginBut = (Button) findViewById(R.id.loginButton);
-
+        in = getResources().openRawResource(R.raw.weburl);
         //获取登陆状态避免重复登陆
         sp = getSharedPreferences("User", MODE_PRIVATE);
 
@@ -65,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
             userName.setText(userNameStr);
             password.setText(passwordStr);
             System.out.println("用户名"+userName.getText().toString()+"密码"+password.getText().toString());
-            new Thread(new RequestThread()).start();
+
+            Intent intent = new Intent(MainActivity.this, FunctionActivity.class);
+            startActivity(intent);
+            // new Thread(new RequestThread()).start();
         }
         //登录按钮点击
         loginBut.setOnClickListener(new View.OnClickListener() {
