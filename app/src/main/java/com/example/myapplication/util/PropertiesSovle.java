@@ -28,6 +28,7 @@ public class PropertiesSovle {
             pro.load(in);
         } catch (Exception e){
             Log.e("PropertiesSovle.24","配置文件解析错误",e);
+            e.printStackTrace();
         }
         return pro;
     }

@@ -66,7 +66,7 @@ public class WebServiceRequest  {
     }
 
     // 将输入流转化为 String 型
-    private static String parseInfo(InputStream inStream) throws Exception {
+    public static String parseInfo(InputStream inStream) throws Exception {
         byte[] data = read(inStream);
         // 转化为字符串
         return new String(data, "UTF-8");
