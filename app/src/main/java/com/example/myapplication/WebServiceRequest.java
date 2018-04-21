@@ -1,30 +1,39 @@
 package com.example.myapplication;
 
+import android.util.Log;
+
+import com.example.myapplication.util.PropertiesSovle;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Properties;
 
 /**
  * Created by 你敬爱的彪哥 on 2018/2/11.
  */
 
-public class WebServiceRequest {
-    private static String IP = "192.168.8.24:8080/login";
+public class WebServiceRequest  {
+
+    //登陆服务器请求ip请将ip更改为本机的ip，服务器代码详见portal，没有权限请联系476887261@qq.com申请
+    private PropertiesSovle propertiesSovle = new PropertiesSovle();
 
     // 通过Get方式获取HTTP服务器数据
-    public static String executeHttpGet(String username, String password) {
-
+    public static String executeHttpGet(InputStream in, String username, String password) {
+        Log.i("服务器请求","WebServiceRequest.executeHttpGet请求开始");
         HttpURLConnection conn = null;
         InputStream is = null;
 
         try {
             // 用户名 密码
+            Properties pro=PropertiesSovle.getProperties(in);
+            String IP =pro.getProperty("LOGINURL");
             // URL 地址
             String path = "http://" + IP;
             path = path + "?username=" + username + "&password=" + password;
-
+            Log.i("url",path);
             conn = (HttpURLConnection) new URL(path).openConnection();
             conn.setConnectTimeout(3000); // 设置超时时间
             conn.setReadTimeout(3000);
@@ -57,7 +66,7 @@ public class WebServiceRequest {
     }
 
     // 将输入流转化为 String 型
-    private static String parseInfo(InputStream inStream) throws Exception {
+    public static String parseInfo(InputStream inStream) throws Exception {
         byte[] data = read(inStream);
         // 转化为字符串
         return new String(data, "UTF-8");

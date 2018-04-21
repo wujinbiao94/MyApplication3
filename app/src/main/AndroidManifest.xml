@@ -4,7 +4,26 @@
 
     <!-- 加联网权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <!-- 允许程序打开网络套接字 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 允许程序设置内置sd卡的写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 允许程序获取网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 允许程序访问WiFi网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 允许程序读写手机状态和身份 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!--相机-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.front"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +38,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FunctionActivity"></activity>
+        <!-- 功能选择界面 -->
+        <activity
+            android:name=".FunctionActivity"
+            android:label="@string/function_name" />
+        <!-- 高德地图key-替换成自己申请的高德地图key -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="d70e0d5fe6218651e7a1dd3810e5920b" />
+        <!-- 地图界面 -->
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/map_name" />
+        <!-- 导航 -->
+        <activity
+            android:name="com.amap.api.navi.AmapRouteActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <!-- 定位 -->
+        <service android:name="com.amap.api.location.APSService" />
+        <!--拍照-->
+        <activity
+            android:name=".CameraActivity"
+            android:label="@string/camera_name" />
     </application>
 
 </manifest>
