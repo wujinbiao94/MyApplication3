@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.util.Constons;
 import com.example.myapplication.util.HttpPostUpLoadFile;
 import com.example.myapplication.util.ParseJsonToMap;
 import com.example.myapplication.util.PropertiesSovle;
@@ -78,14 +80,21 @@ public class CameraActivity extends AppCompatActivity {
                        Boolean flag = currentImageFile.createNewFile();
                        Log.i("文件创建结果",flag.toString());
                     } catch (IOException e) {
-                        Log.e("文件创建失败！",null);
+                        Log.e("文件创建失败！"," ");
                         e.printStackTrace();
                     }
                 }
 
+                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                StrictMode.setVmPolicy(builder.build());
+                builder.detectFileUriExposure();
+
                 Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 it.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(currentImageFile));
                 startActivityForResult(it, Activity.DEFAULT_KEYS_DIALER);
+
+
+
             }
 
         });
@@ -103,10 +112,8 @@ public class CameraActivity extends AppCompatActivity {
             Log.i("获取路径",filePath);
             File file = new File(filePath);
             Properties pro= PropertiesSovle.getProperties(in);
-            String URL = pro.getProperty("PICTURE_UPLOAD");
-            if (URL == null){
-                URL = "http://192.168.2.216:8080/upLoadFile";
-            }
+            //IP地址
+            String URL = "http://"+ Constons.IP +":8080/upLoadFile";
             Log.i("车牌请求url=",URL);
             Bitmap bitmap = BitmapFactory.decodeFile(filePath);
             //利用Bitmap对象创建缩略图

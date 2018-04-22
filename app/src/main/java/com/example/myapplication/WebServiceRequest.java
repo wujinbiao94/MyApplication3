@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.util.Log;
 
+import com.example.myapplication.util.Constons;
 import com.example.myapplication.util.PropertiesSovle;
 
 import java.io.ByteArrayOutputStream;
@@ -29,14 +30,14 @@ public class WebServiceRequest  {
         try {
             // 用户名 密码
             Properties pro=PropertiesSovle.getProperties(in);
-            String IP =pro.getProperty("LOGINURL");
+            String IP = Constons.IP + ":8080/login";//pro.getProperty("LOGINURL");
             // URL 地址
             String path = "http://" + IP;
             path = path + "?username=" + username + "&password=" + password;
             Log.i("url",path);
             conn = (HttpURLConnection) new URL(path).openConnection();
-            conn.setConnectTimeout(3000); // 设置超时时间
-            conn.setReadTimeout(3000);
+           // conn.setConnectTimeout(3000); // 设置超时时间
+           // conn.setReadTimeout(3000);
             conn.setDoInput(true);
             conn.setRequestMethod("GET"); // 设置获取信息方式
             conn.setRequestProperty("Charset", "UTF-8"); // 设置接收数据编码格式
