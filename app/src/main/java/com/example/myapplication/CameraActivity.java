@@ -64,6 +64,7 @@ public class CameraActivity extends AppCompatActivity {
         cameraBtn = (ImageButton) findViewById(R.id.camera_photo);
         img_show = (ImageView) findViewById(R.id.img_show);
         textView = (TextView) findViewById(R.id.camera_textView);
+        caeraSearch = (ImageButton) findViewById(R.id.camera_search);
         waitingDialog = new ProgressDialog(CameraActivity.this);
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +98,14 @@ public class CameraActivity extends AppCompatActivity {
 
             }
 
+        });
+
+        caeraSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CameraActivity.this, DetailActivity.class);
+                startActivity(intent);
+            }
         });
     }
     @Override

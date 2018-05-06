@@ -3,4 +3,8 @@
     <string name="function_name">功能选择</string>
     <string name="map_name">地图导航</string>
     <string name="camera_name">拍照</string>
+    <string name="detail_name">车辆信息</string>
+    <string name="peccancy_name">违章处理</string>
+    <string name="license_name">驾驶证信息</string>
+    <string name="peccancy_insert_name">违章信息录入</string>
 </resources>

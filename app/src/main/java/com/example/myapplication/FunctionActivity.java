@@ -25,6 +25,12 @@ public class FunctionActivity extends AppCompatActivity implements INaviInfoCall
     Button navigation;
     //车辆查询按钮
     Button carInfo;
+    //驾驶证查询
+    Button licenseSearch;
+    //违规查询
+    Button peccancyInfo;
+    //违章信息录入
+    Button peccancyInsert;
     // 返回主线程更新数据
     private static Handler handler = new Handler();
     @Override
@@ -48,7 +54,31 @@ public class FunctionActivity extends AppCompatActivity implements INaviInfoCall
                 new Thread(new carInfoThread()).start();
             }
         });
+        //驾驶证查询
+        licenseSearch = (Button) findViewById(R.id.dirverLicenceInfo);
+        licenseSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new dirverLicenceInfoThread()).start();
+            }
+        });
+        //违章查询
+        peccancyInfo = (Button) findViewById(R.id.peccancyInfo);
+        peccancyInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new peccancyInfoThread()).start();
+            }
+        });
 
+        //违章信息录入
+        peccancyInsert = (Button) findViewById(R.id.peccancyDeal);
+        peccancyInsert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new peccancyInsertThread()).start();
+            }
+        });
     }
 
     @Override
@@ -136,6 +166,39 @@ public class FunctionActivity extends AppCompatActivity implements INaviInfoCall
         @Override
         public void run() {
             Intent intent = new Intent(FunctionActivity.this, CameraActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * 跳转到驾驶证信息查询页
+     */
+    public class dirverLicenceInfoThread implements Runnable{
+        @Override
+        public void run(){
+            Intent intent = new Intent(FunctionActivity.this, LicenseActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * 跳转到违章查询界面
+     */
+    public class peccancyInfoThread implements Runnable {
+        @Override
+        public void run(){
+            Intent intent = new Intent(FunctionActivity.this, PeccancyActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * 跳转到违章信息录入
+     */
+    public class peccancyInsertThread implements Runnable {
+        @Override
+        public void run(){
+            Intent intent = new Intent(FunctionActivity.this, PeccancyInsertActivity.class);
             startActivity(intent);
         }
     }
