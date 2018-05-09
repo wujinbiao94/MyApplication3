@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,8 @@ import com.example.myapplication.util.ParseJsonToMap;
 import com.example.myapplication.util.PropertiesSovle;
 import com.iflytek.cloud.thirdparty.S;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +36,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -56,6 +61,8 @@ public class CameraActivity extends AppCompatActivity {
     InputStream in=null;
     //等待窗口
     ProgressDialog waitingDialog;
+
+    private static Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +72,7 @@ public class CameraActivity extends AppCompatActivity {
         img_show = (ImageView) findViewById(R.id.img_show);
         textView = (TextView) findViewById(R.id.camera_textView);
         caeraSearch = (ImageButton) findViewById(R.id.camera_search);
+
         waitingDialog = new ProgressDialog(CameraActivity.this);
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,12 +107,11 @@ public class CameraActivity extends AppCompatActivity {
             }
 
         });
-
+        //搜索按钮
         caeraSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CameraActivity.this, DetailActivity.class);
-                startActivity(intent);
+                new Thread(new RequestThread()).start();
             }
         });
     }
@@ -191,5 +198,35 @@ public class CameraActivity extends AppCompatActivity {
         waitingDialog.setIndeterminate(true);
         waitingDialog.setCancelable(false);
         waitingDialog.show();
+    }
+
+    /**
+     * 车牌请求子线程
+     */
+    public class RequestThread implements Runnable {
+        @Override
+        public void run() {
+            System.out.println("车牌查询请求！");
+            final String carNum = textView.getText().toString();
+            if (carNum == "" || carNum == null){
+                System.out.println("车牌号为空！");
+                return;
+            }
+
+            NameValuePair pair  = new BasicNameValuePair("carNum",carNum);
+            List<NameValuePair> list = new ArrayList<>();
+            list.add(pair);
+            String json = WebServiceRequest.postRequest(list,"http://"+Constons.IP+"/"+Constons.carInfoSearch);
+            System.out.println("服务器返回的json="+json);
+            final List<Map<String, Object>> result = ParseJsonToMap.parseJSONObject(json);
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(CameraActivity.this, DetailActivity.class);
+                    intent.putExtra("data",(Serializable)result);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }

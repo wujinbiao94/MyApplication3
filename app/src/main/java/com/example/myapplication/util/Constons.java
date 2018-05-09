@@ -7,6 +7,9 @@ package com.example.myapplication.util;
 
 public class Constons {
     //ip地址
-    public static final String IP = "192.168.43.165";
+    public static final String IP = "192.168.2.216:8080";
+
+    //车牌查询请求方法名
+    public static final String carInfoSearch = "carRequest.do";
 
 }

@@ -18,7 +18,7 @@ import java.util.Map;
  */
 
 public class ParseJsonToMap {
-    public List<Map<String, Object>> parseJSONObject(String json) {
+    public static List<Map<String, Object>> parseJSONObject(String json) {
         List<Map<String, Object>> res = new ArrayList<>();
         Log.i("json转换函数：", "待转换json=" + json);
         try {

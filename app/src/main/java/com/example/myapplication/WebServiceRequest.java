@@ -5,13 +5,25 @@ import android.util.Log;
 import com.example.myapplication.util.Constons;
 import com.example.myapplication.util.PropertiesSovle;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Properties;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 /**
  * Created by 你敬爱的彪哥 on 2018/2/11.
  */
@@ -84,5 +96,60 @@ public class WebServiceRequest  {
         inStream.close();
         return outputStream.toByteArray();
 
+    }
+
+    /**
+     * post请求
+     * @param params 请求参数
+     * @param Url 请求url
+     * @return 返回字符串
+     */
+    public static String postRequest(List<NameValuePair> params, String Url){
+        String result = "";
+        HttpClient httpClient = null;
+        System.out.println("请求url="+Url);
+        try{
+            HttpEntity requestHttpEntity = new UrlEncodedFormEntity(
+                    params,"UTF-8");
+            // URL使用基本URL即可，其中不需要加参数
+            HttpPost httpPost = new HttpPost(Url);
+            // 将请求体内容加入请求中
+            httpPost.setEntity(requestHttpEntity);
+            // 需要客户端对象来发送请求
+            httpClient = new DefaultHttpClient();
+            // 发送请求
+            HttpResponse response = httpClient.execute(httpPost);
+            // 显示响应
+            if (null == response)
+            {
+                System.out.println("url="+Url+"请求服务器返回的数据为空！");
+                return "";
+            }
+            //转换返回返回的数据
+            HttpEntity httpEntity = response.getEntity();
+            try
+            {
+                InputStream inputStream = httpEntity.getContent();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        inputStream));
+                String line = "";
+                while (null != (line = reader.readLine()))
+                {
+                    result += line;
+                }
+
+                System.out.println("服务器返回的数据="+result);
+            }
+            catch (Exception e)
+            {
+                System.out.println("服务器返回数据转换异常");
+                e.printStackTrace();
+            }
+
+        }catch (Exception e){
+            System.out.println("请求服务器失败！");
+            e.printStackTrace();
+        }
+        return result;
     }
 }
