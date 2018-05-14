@@ -30,6 +30,7 @@ public class LicenseActivity extends AppCompatActivity {
     TextView information;
     TextView age;
     TextView sex;
+    Button cleanBtn;
     private static Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,21 @@ public class LicenseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new Thread(new requestByDriverLicenseThread()).start();
             }
+        });
+
+        cleanBtn = (Button) findViewById(R.id.cleanBtn);
+        cleanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                driverLicense.setText("");
+                driverName.setText("");
+                phone.setText("");
+                adress.setText("");
+                information.setText("");
+                age.setText("");
+                sex.setText("");
+            }
+
         });
     }
 

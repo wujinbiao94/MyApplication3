@@ -11,5 +11,9 @@ public class Constons {
 
     //车牌查询请求方法名
     public static final String carInfoSearch = "carRequest.do";
+    //驾驶证查询
+    public static final String driverLicenseSearch = "driverLisence.do";
+    //插入违章信息
+    public static final String peccancyInsert = "peccancyInsert.do";
 
 }
