@@ -16,4 +16,7 @@ public class Constons {
     //插入违章信息
     public static final String peccancyInsert = "peccancyInsert.do";
 
+    //查询违章信息
+    public static final String peccancySearch = "peccancySearch.do";
+
 }

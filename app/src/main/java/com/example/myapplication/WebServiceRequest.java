@@ -42,7 +42,7 @@ public class WebServiceRequest  {
         try {
             // 用户名 密码
             Properties pro=PropertiesSovle.getProperties(in);
-            String IP = Constons.IP + ":8080/login";//pro.getProperty("LOGINURL");
+            String IP = Constons.IP + "/login";//pro.getProperty("LOGINURL");
             // URL 地址
             String path = "http://" + IP;
             path = path + "?username=" + username + "&password=" + password;
